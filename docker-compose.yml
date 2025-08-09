@@ -1,0 +1,82 @@
+services:
+  app:
+    image: rust-backend:alpine
+    build:
+      context: .
+      network: host
+    container_name: rust-backend
+    restart: unless-stopped
+    environment:
+      - APP__SERVER__HOST=0.0.0.0
+      - APP__SERVER__PORT=8080
+      - APP__MYSQL__URI=mysql://root:password@mysql:3306/app
+      - APP__MONGODB__URI=mongodb://mongo:27017
+      - APP__REDIS__URI=redis://redis:6379
+      - APP__RABBITMQ__URI=amqp://guest:guest@rabbitmq:5672/%2f
+      - APP__KAFKA__BROKERS=kafka:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+      - rabbitmq
+      - kafka
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+
+  kafka:
+    image: bitnami/kafka:4.0
+    container_name: kafka
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_KRAFT_CLUSTER_ID=FYp0o70zSlOPEQbUNNQ3ig
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    volumes:
+      - ./data/kafka:/bitnami/kafka
+
+

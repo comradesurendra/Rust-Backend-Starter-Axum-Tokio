@@ -1,0 +1,88 @@
+# -----------
+# Rust build artifacts
+# -----------
+/target/
+
+# If you build artifacts in sub-crates (workspaces)
+**/target/
+
+# Binaries
+/bin/
+/app/bin/
+*.exe
+*.dll
+*.dylib
+*.so
+*.out
+
+# -----------
+# Environment & config
+# -----------
+.env
+.env.*
+!.env.example
+
+# Local config overrides for compose
+docker-compose.override.yml
+
+# -----------
+# Local runtime data (volumes)
+# -----------
+/data/
+/data.bak/
+
+# Logs
+/logs/
+*.log
+
+# -----------
+# Editors / IDEs
+# -----------
+.vscode/
+.idea/
+*.iml
+.fleet/
+.history/
+.cursor/
+.cursorignore
+
+# -----------
+# OS junk
+# -----------
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# -----------
+# Caches / temp
+# -----------
+.cache/
+tmp/
+.tmp/
+temp/
+*.swp
+*.swo
+
+# -----------
+# Coverage / reports
+# -----------
+coverage/
+htmlcov/
+lcov.info
+
+# -----------
+# Secrets / certs (keep out of VCS)
+# -----------
+*.pem
+*.key
+*.crt
+*.p12
+
+# -----------
+# Misc
+# -----------
+*.sql
+*.sql.gz
+
+

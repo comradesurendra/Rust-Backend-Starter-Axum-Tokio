@@ -1,0 +1,20 @@
+[server]
+host = "0.0.0.0"
+port = 8080
+
+[mysql]
+uri = "mysql://root:password@mysql:3306/app"
+
+[mongodb]
+uri = "mongodb://mongo:27017"
+
+[redis]
+uri = "redis://redis:6379"
+
+[rabbitmq]
+uri = "amqp://guest:guest@rabbitmq:5672/%2f"
+
+[kafka]
+brokers = "kafka:9092"
+
+

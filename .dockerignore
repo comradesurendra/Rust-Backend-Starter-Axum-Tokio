@@ -1,0 +1,28 @@
+# Build artifacts
+/target
+
+# VCS
+/.git
+/.gitignore
+
+# IDE/editor
+/.vscode
+/.idea
+
+# OS
+.DS_Store
+
+# Runtime data volumes
+/data
+/data.bak
+
+# Docker compose shouldn't be in image
+/docker-compose.yml
+
+# Local env files
+.env
+.env.*
+
+# Tests not needed in image
+/tests
+
