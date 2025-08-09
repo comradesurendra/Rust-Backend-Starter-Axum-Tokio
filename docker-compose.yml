@@ -1,6 +1,6 @@
 services:
   app:
-    image: rust-backend:alpine
+    image: rust-backend:latest
     build:
       context: .
       network: host
